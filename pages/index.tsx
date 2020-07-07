@@ -1,43 +1,39 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import axios from 'axios'
-import { Posts, PostType } from '../types/post'
-import { Spin, Empty } from 'antd'
+import { GetServerSideProps, NextPage } from 'next'
+import dynamic from 'next/dynamic'
+import { Spin } from 'antd'
 
-import PostsList from '../components/PostsList'
+import { Posts, PostType } from '../types/post'
+const PostsList = dynamic(import('../components/PostsList'), {
+  loading: () => <p>...</p>,
+})
 import Layout from '../components/Layout'
 
-const Home: React.FC = () => {
-  const [posts, setPosts] = useState<Posts>([])
-  const [error, setError] = useState('')
+export interface HomeProps {
+  posts: Posts;
+}
 
-  useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const posts = await axios.get('https://simple-blog-api.crew.red/posts')
-
-        const filteredPosts = posts.data.filter(
-          (post: PostType) => post.title && post.body
-        )
-        setPosts(filteredPosts)
-      } catch (err) {
-        setError(err)
-      }
-    }
-
-    fetchPosts()
-  }, [])
-
+const Home: NextPage<HomeProps> = ({ posts }) => {
   return (
     <Layout>
-      {Array.length !== 0 && !error ? (
-        <PostsList posts={posts} />
-      ) : error ? (
-        <Empty />
-      ) : (
-        <Spin />
-      )}
+      <PostsList posts={posts} />
     </Layout>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  const posts = await axios.get('https://simple-blog-api.crew.red/posts')
+
+  const filteredPosts: Posts = posts.data.filter(
+    (post: PostType) => post.title && post.body
+  )
+
+  return {
+    props: {
+      posts: filteredPosts,
+    },
+  }
 }
 
 export default Home

@@ -18,10 +18,8 @@ export default class MyDocument extends Document {
   render() {
     return (
       <html>
-        <Head>
-          <title>My page</title>
-          {this.props.styleTags}
-        </Head>
+        <Head>{this.props.styleTags}</Head>
+        <link rel="stylesheet" type="text/css" href="/nprogress.css" />
         <body>
           <Main />
           <NextScript />

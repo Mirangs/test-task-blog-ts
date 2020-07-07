@@ -1,9 +1,10 @@
 import React from 'react'
 import Link from 'next/link'
-import { PostType } from '../types/post'
 import { Card } from 'antd'
 import styled from 'styled-components'
 import { Typography } from 'antd'
+
+import { PostType } from '../types/post'
 
 const { Paragraph } = Typography
 
