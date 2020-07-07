@@ -19,6 +19,12 @@ export default class MyDocument extends Document {
     return (
       <html>
         <Head>{this.props.styleTags}</Head>
+        <title>Simple NextJS SSR Blog</title>
+        <meta name="keywords" content="nextjs,ssr,blog" />
+        <meta
+          name="description"
+          content="This is simple NextJS test task blog"
+        />
         <link rel="stylesheet" type="text/css" href="/nprogress.css" />
         <body>
           <Main />

@@ -14,7 +14,7 @@ export interface MoreLinkProps {
 
 const MoreLink: React.FC<MoreLinkProps> = ({ id }) => (
   <Link href="/posts/[id]" as={`/posts/${id}`}>
-    <a>More</a>
+    <a aria-label="To full post">More</a>
   </Link>
 )
 
